@@ -8,7 +8,7 @@ export default function Post({ post }: PostProps) {
 
   return (
     <div className="border-b">
-      <div className="bg-white p-6 border-gray-400 border-opacity-15">
+      <div className="bg-white hover:bg-gray-50 cursor-pointer duration-300 hover:duration-300 p-6 border-gray-400 border-opacity-15">
         <div className="flex items-center space-x-3">
           <img
             className="w-11 h-11 object-cover rounded-full"
