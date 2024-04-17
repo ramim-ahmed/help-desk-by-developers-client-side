@@ -1,5 +1,11 @@
+import { TPost } from "@/types";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
-export default function Post() {
+type PostProps = {
+  post: TPost;
+};
+export default function Post({ post }: PostProps) {
+  const { title, content, Like, Comment } = post;
+
   return (
     <div className="border-b">
       <div className="bg-white p-6 border-gray-400 border-opacity-15">
@@ -15,20 +21,14 @@ export default function Post() {
           </div>
         </div>
         <div className="mt-4">
-          <h2 className="text-lg font-semibold">
-            Some Issues we are currently fixing
-          </h2>
-          <h3 className="text-gray-600 mt-4">
-            Some Common issue which we are going to fix. Dev In progress... -
-            Actionable dashboard - Daily Streak - desktop app video download -
-            Mobile App some user issue for Batch 6 and Reset batch 5 & 6...
-          </h3>
+          <h2 className="text-lg font-semibold">{title}</h2>
+          <h3 className="text-gray-600 mt-4">{content}</h3>
           <div className="flex justify-between items-center text-gray-600 mt-4">
             <div className="flex items-center space-x-5">
-              <button type="button">12 Comments</button>
+              <button type="button">{Comment.length || 0} Comments</button>
               <div className="flex items-center space-x-1">
                 <HandThumbUpIcon className="w-6 h-6 text-gray-400" />
-                <p>45</p>
+                <p>{Like.length || 0}</p>
               </div>
             </div>
             <div className="flex items-center space-x-5">
