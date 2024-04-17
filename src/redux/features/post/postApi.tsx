@@ -4,6 +4,7 @@ export const postApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     fetchPosts: builder.query({
       query: () => "/posts",
+      providesTags: ["POST"],
     }),
   }),
 });

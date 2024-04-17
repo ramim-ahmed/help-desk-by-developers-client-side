@@ -1,3 +1,4 @@
+import { useAddLikeMutation } from "@/redux/features/like/likeApi";
 import { TPost } from "@/types";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 type PostProps = {
@@ -5,7 +6,18 @@ type PostProps = {
 };
 export default function Post({ post }: PostProps) {
   const { title, content, Like, Comment } = post;
-
+  const [addLike, { isError, isLoading }] = useAddLikeMutation();
+  const handleLike = () => {
+    const data = {
+      userId: "2b3c6909-b345-47fe-aa25-c153f292369c",
+      postId: "1541c961-b358-469e-8f91-9dc8358ac054",
+    };
+    addLike(data);
+  };
+  console.log(isError);
+  if (isLoading) {
+    return <h1>Loading.....</h1>;
+  }
   return (
     <div className="border-b">
       <div className="bg-white hover:bg-gray-50 cursor-pointer duration-300 hover:duration-300 p-6 border-gray-400 border-opacity-15">
@@ -26,7 +38,10 @@ export default function Post({ post }: PostProps) {
           <div className="flex justify-between items-center text-gray-600 mt-4">
             <div className="flex items-center space-x-5">
               <button type="button">{Comment.length || 0} Comments</button>
-              <div className="flex items-center space-x-1">
+              <div
+                onClick={() => handleLike()}
+                className="flex items-center space-x-1"
+              >
                 <HandThumbUpIcon className="w-6 h-6 text-gray-400" />
                 <p>{Like.length || 0}</p>
               </div>
