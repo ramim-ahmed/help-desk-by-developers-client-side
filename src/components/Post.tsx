@@ -14,7 +14,9 @@ export default function Post({ post }: PostProps) {
     };
     addLike(data);
   };
-  console.log(isError);
+  if (isError) {
+    return <h1>Like Failed!!</h1>;
+  }
   if (isLoading) {
     return <h1>Loading.....</h1>;
   }
