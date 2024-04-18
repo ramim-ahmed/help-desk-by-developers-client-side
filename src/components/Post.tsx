@@ -17,9 +17,6 @@ export default function Post({ post }: PostProps) {
   if (isError) {
     return <h1>Like Failed!!</h1>;
   }
-  if (isLoading) {
-    return <h1>Loading.....</h1>;
-  }
   return (
     <div className="border-b">
       <div className="bg-white hover:bg-gray-50 cursor-pointer duration-300 hover:duration-300 p-6 border-gray-400 border-opacity-15">
@@ -40,13 +37,17 @@ export default function Post({ post }: PostProps) {
           <div className="flex justify-between items-center text-gray-600 mt-4">
             <div className="flex items-center space-x-5">
               <button type="button">{Comment.length || 0} Comments</button>
-              <div
-                onClick={() => handleLike()}
-                className="flex items-center space-x-1"
-              >
-                <HandThumbUpIcon className="w-6 h-6 text-gray-400" />
-                <p>{Like.length || 0}</p>
-              </div>
+              {isLoading ? (
+                <h1>Loading</h1>
+              ) : (
+                <div
+                  onClick={() => handleLike()}
+                  className="flex items-center space-x-1"
+                >
+                  <HandThumbUpIcon className="w-6 h-6 text-gray-400" />
+                  <p>{Like.length || 0}</p>
+                </div>
+              )}
             </div>
             <div className="flex items-center space-x-5">
               <button

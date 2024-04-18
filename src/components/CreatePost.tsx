@@ -16,7 +16,40 @@ import {
 
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { Button } from "./ui/button";
+import { FormEvent, SetStateAction, useState } from "react";
+import { useFetchPlatformsQuery } from "@/redux/features/platform/platformApi";
+import { TPlatform, TPostType } from "@/types";
+import { useFetchPostTypesQuery } from "@/redux/features/postType/postTypeApi";
+import { useAddNewPostMutation } from "@/redux/features/post/postApi";
 export default function CreatePost() {
+  const { data: platforms } = useFetchPlatformsQuery(undefined);
+  const { data: postTypes } = useFetchPostTypesQuery(undefined);
+  const [addNewPost, { isLoading, isError }] = useAddNewPostMutation();
+  const userId = "87d52206-f3ec-4a51-ae20-144c187553fc";
+  const [title, setTitle] = useState("");
+  const [platformId, setPlatformId] = useState("");
+  const [postTypeId, setPostTypeId] = useState("");
+  const [content, setContent] = useState("");
+  const [uploadImg, setUploadImg] = useState("");
+  const handleAddNewPost = (e: FormEvent) => {
+    e.preventDefault();
+    const data = {
+      title,
+      userId,
+      platformId,
+      postTypeId,
+      content,
+      uploadImg,
+      postedDate: new Date(),
+    };
+    addNewPost(data);
+  };
+  if (isLoading) {
+    return <h1>loading...</h1>;
+  }
+  if (isError) {
+    return <h1>post failed</h1>;
+  }
   return (
     <div>
       <Dialog>
@@ -49,7 +82,7 @@ export default function CreatePost() {
           <DialogHeader>
             <DialogTitle>Create New Post</DialogTitle>
             <DialogDescription>
-              <section className="relative">
+              <form className="relative" onSubmit={handleAddNewPost}>
                 <div className="flex sm:flex-nowrap flex-wrap">
                   <div className=" bg-white flex flex-col w-full mt-8 ">
                     <div className="relative mb-4">
@@ -60,6 +93,7 @@ export default function CreatePost() {
                         Title
                       </label>
                       <input
+                        onChange={(e) => setTitle(e.target.value)}
                         type="text"
                         id="title"
                         name="title"
@@ -69,37 +103,39 @@ export default function CreatePost() {
                     <div className="relative mb-4 flex justify-between items-center">
                       <div>
                         <label>Platform</label>
-                        <Select>
+                        <Select
+                          onValueChange={(value: SetStateAction<string>) =>
+                            setPlatformId(value)
+                          }
+                        >
                           <SelectTrigger className="w-[210px]">
                             <SelectValue placeholder="Select Platform" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Website">Website</SelectItem>
-                            <SelectItem value="Android App">
-                              Android App
-                            </SelectItem>
-                            <SelectItem value="IOS App">IOS App</SelectItem>
-                            <SelectItem value="Desktop App">
-                              Desktop App
-                            </SelectItem>
+                            {platforms?.data.map((platform: TPlatform) => (
+                              <SelectItem key={platform.id} value={platform.id}>
+                                {platform.title}
+                              </SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                       </div>
                       <div>
                         <label>Post Type</label>
-                        <Select>
+                        <Select
+                          onValueChange={(value: SetStateAction<string>) =>
+                            setPostTypeId(value)
+                          }
+                        >
                           <SelectTrigger className="w-[210px]">
-                            <SelectValue placeholder="Select Post Type" />
+                            <SelectValue placeholder="Theme" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Bugs">Bugs</SelectItem>
-                            <SelectItem value="Improvements">
-                              Improvements
-                            </SelectItem>
-                            <SelectItem value="Feature Request">
-                              Feature Request
-                            </SelectItem>
-                            <SelectItem value="Quaries">Quaries</SelectItem>
+                            {postTypes?.data.map((postType: TPostType) => (
+                              <SelectItem key={postType.id} value={postType.id}>
+                                {postType.title}
+                              </SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                       </div>
@@ -112,6 +148,7 @@ export default function CreatePost() {
                         Content
                       </label>
                       <textarea
+                        onChange={(e) => setContent(e.target.value)}
                         id="content"
                         name="content"
                         className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
@@ -126,6 +163,7 @@ export default function CreatePost() {
                         Photo URL
                       </label>
                       <input
+                        onChange={(e) => setUploadImg(e.target.value)}
                         type="url"
                         id="photo_url"
                         name="photo_url"
@@ -135,7 +173,7 @@ export default function CreatePost() {
                     <Button>Submit Post</Button>
                   </div>
                 </div>
-              </section>
+              </form>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>

@@ -1,7 +1,3 @@
-export type TPostType = {
-  title: string;
-};
-
 export type TLike = {
   id: string;
   userId: string;
@@ -28,6 +24,22 @@ export type TPost = {
   postedDate: string;
   Like: Array<TLike>;
   Comment: Array<TComment>;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TPlatform = {
+  id: string;
+  title: string;
+  icon: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TPostType = {
+  id: string;
+  title: string;
+  icon: string;
   createdAt: string;
   updatedAt: string;
 };

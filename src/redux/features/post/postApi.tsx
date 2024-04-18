@@ -6,7 +6,15 @@ export const postApi = baseApi.injectEndpoints({
       query: () => "/posts",
       providesTags: ["POST"],
     }),
+    addNewPost: builder.mutation({
+      query: (data) => ({
+        url: "posts/create-post",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["POST"],
+    }),
   }),
 });
 
-export const { useFetchPostsQuery } = postApi;
+export const { useFetchPostsQuery, useAddNewPostMutation } = postApi;
