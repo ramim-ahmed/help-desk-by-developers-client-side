@@ -93,6 +93,7 @@ export default function CreatePost() {
                         Title
                       </label>
                       <input
+                        required
                         onChange={(e) => setTitle(e.target.value)}
                         type="text"
                         id="title"
@@ -128,7 +129,7 @@ export default function CreatePost() {
                           }
                         >
                           <SelectTrigger className="w-[210px]">
-                            <SelectValue placeholder="Theme" />
+                            <SelectValue placeholder="Select PostType" />
                           </SelectTrigger>
                           <SelectContent>
                             {postTypes?.data.map((postType: TPostType) => (
@@ -148,11 +149,11 @@ export default function CreatePost() {
                         Content
                       </label>
                       <textarea
+                        required
                         onChange={(e) => setContent(e.target.value)}
                         id="content"
                         name="content"
                         className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                        defaultValue={""}
                       />
                     </div>
                     <div className="relative mb-4">

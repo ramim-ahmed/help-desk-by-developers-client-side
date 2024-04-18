@@ -1,7 +1,7 @@
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
 export default function Nav() {
   return (
-    <nav className="border-b">
+    <nav className="border-b sticky top-0 z-10 bg-white">
       <div className="flex justify-between items-center max-w-4xl mx-auto py-3">
         <div>
           <h1 className="text-xl font-semibold">HELP DESK</h1>

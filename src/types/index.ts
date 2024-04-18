@@ -1,3 +1,10 @@
+export type TUser = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+};
+
 export type TLike = {
   id: string;
   userId: string;
@@ -18,6 +25,9 @@ export type TPost = {
   title: string;
   platformId: string;
   postTypeId: string;
+  user: TUser;
+  postType: TPostType;
+  platform: TPlatform;
   content: string;
   uploadImg: string;
   userId: string;
